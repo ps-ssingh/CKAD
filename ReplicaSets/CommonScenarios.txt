@@ -1,5 +1,5 @@
-How to Edit the image definition of deployed replciaset ?  
-. Using kubectl set image
+1. How to Edit the image definition of deployed replciaset ?  
+a. Using kubectl set image
 This command allows you to update the image of a container inside pods that are part of your ReplicaSet.
 
 
@@ -13,7 +13,7 @@ For example, if your ReplicaSet is named replicaset-1, the container's name is n
 kubectl set image replicaset replicaset-1 nginx=nginx:1.19.0
 
 
-2. Editing the ReplicaSet Directly
+b. Editing the ReplicaSet Directly
 If you need to make more comprehensive changes or prefer to manually edit the ReplicaSet configuration, you can use the following command:
 
 
