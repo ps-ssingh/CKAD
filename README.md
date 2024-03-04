@@ -1,16 +1,16 @@
-#Certification Tip: Formatting Output with kubectl
-                                                                       
+# Kubernetes `kubectl` Output Formatting Guide
 
-The default output format for all kubectl commands is the human-readable plain-text format.
+Understanding how to format the output of `kubectl` commands can significantly improve your productivity and insights when working with Kubernetes. By default, `kubectl` commands return information in a human-readable plain-text format. However, you can customize this output format to better suit your needs using the `-o` (output) flag.
 
-The -o flag allows us to output the details in several different formats.
+## Using the `-o` Flag
+
+The `-o` flag allows you to specify the format of the command's output. Here's the general usage pattern:
 
 ```bash
 kubectl [command] [TYPE] [NAME] -o <output_format>
 
+
 Here are some of the commonly used formats:
-
-
 
 -o jsonOutput a JSON formatted API object.
 
@@ -35,7 +35,6 @@ master $ kubectl create namespace test-123 --dry-run -o json
     "spec": {},
     "status": {}
 }
-master $
 
 
 #Output with YAML format:
