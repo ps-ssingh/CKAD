@@ -1,0 +1,26 @@
+How to Edit the image definition of deployed replciaset ?  
+. Using kubectl set image
+This command allows you to update the image of a container inside pods that are part of your ReplicaSet.
+
+
+kubectl set image replicaset <replicaset-name> <container-name>=<new-image>:<tag>
+
+<replicaset-name>: The name of your ReplicaSet.
+<container-name>: The name of the container inside your pods that you want to update.
+<new-image>:<tag>: The new image and its tag that you want to use.
+For example, if your ReplicaSet is named replicaset-1, the container's name is nginx, and you want to update it to use the nginx:1.19.0 image, you would run:
+
+kubectl set image replicaset replicaset-1 nginx=nginx:1.19.0
+
+
+2. Editing the ReplicaSet Directly
+If you need to make more comprehensive changes or prefer to manually edit the ReplicaSet configuration, you can use the following command:
+
+
+kubectl edit replicaset <replicaset-name>
+This will open the ReplicaSet's definition in your default editor, allowing you to make any necessary changes, including updating the image. Once you save and close the editor, Kubernetes will apply the changes.
+
+Note:
+Update Strategy: Be aware that directly updating a ReplicaSet's pod template with a new image does not automatically cause existing pods to be replaced with the new image. ReplicaSets are designed to ensure a specific number of pods are 
+running but do not actively replace pods on template changes. If you need this behavior, consider using a Deployment instead, which handles rolling updates to update pod templates across all replicas.
+Existing Pods: For the changes to take effect and for new pods with the updated image to be created, you might have to manually delete the old pods after updating the ReplicaSet. The ReplicaSet will then create new pods with the updated configuration
