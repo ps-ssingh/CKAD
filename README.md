@@ -21,7 +21,7 @@ Here are some of the commonly used formats:
 
 Here are some useful examples:
 
-Output with JSON format:
+#Output with JSON format:
 
 master $ kubectl create namespace test-123 --dry-run -o json
 {
@@ -37,7 +37,7 @@ master $ kubectl create namespace test-123 --dry-run -o json
 master $
 
 
-Output with YAML format:
+#Output with YAML format:
 
 master $ kubectl create namespace test-123 --dry-run -o yaml
 apiVersion: v1
