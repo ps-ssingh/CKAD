@@ -59,6 +59,6 @@ master $ kubectl get pods -o wide
 |----------|----------|----------|-----------|-------|----------|-------|
 | busybox  | 1/1      | Running  |   0       |  3m39s| 10.36.0.2| node01| 
 | ningx    | 1/1      | Running  |   0       |  7m32s| 10.44.0.1| node03|
-| redis    | 1/1      | Running  |   0       |  3m59s| 10.36.0.1  node01|
+| redis    | 1/1      | Running  |   0       |  3m59s| 10.36.0.1| node01|
 
 
