@@ -1,26 +1,53 @@
 1. How to Edit the image definition of deployed replciaset ?  
-a. Using kubectl set image
-This command allows you to update the image of a container inside pods that are part of your ReplicaSet.
+  a. Using kubectl set image
+  This command allows you to update the image of a container inside pods that are part of your ReplicaSet.
+
+  kubectl set image replicaset <replicaset-name> <container-name>=<new-image>:<tag>
+
+  <replicaset-name>: The name of your ReplicaSet.
+  <container-name>: The name of the container inside your pods that you want to update.
+  <new-image>:<tag>: The new image and its tag that you want to use.
+  For example, if your ReplicaSet is named replicaset-1, the container's name is nginx, and you want to update it to use the 
+  nginx:1.19.0 image, you would run:
+
+  kubectl set image replicaset replicaset-1 nginx=nginx:1.19.0
 
 
-kubectl set image replicaset <replicaset-name> <container-name>=<new-image>:<tag>
-
-<replicaset-name>: The name of your ReplicaSet.
-<container-name>: The name of the container inside your pods that you want to update.
-<new-image>:<tag>: The new image and its tag that you want to use.
-For example, if your ReplicaSet is named replicaset-1, the container's name is nginx, and you want to update it to use the nginx:1.19.0 image, you would run:
-
-kubectl set image replicaset replicaset-1 nginx=nginx:1.19.0
+  b. Editing the ReplicaSet Directly
+  If you need to make more comprehensive changes or prefer to manually edit the ReplicaSet configuration, you can use the following 
+  command:
 
 
-b. Editing the ReplicaSet Directly
-If you need to make more comprehensive changes or prefer to manually edit the ReplicaSet configuration, you can use the following command:
+  kubectl edit replicaset <replicaset-name>
+  This will open the ReplicaSet's definition in your default editor, allowing you to make any necessary changes, including updating 
+  the image. Once you save and close the editor, Kubernetes will apply the changes.
+
+  Note:
+  Update Strategy: Be aware that directly updating a ReplicaSet's pod template with a new image does not automatically cause 
+  existing pods to be replaced with the new image. ReplicaSets are designed to ensure a specific number of pods are 
+  running but do not actively replace pods on template changes. If you need this behavior, consider using a Deployment instead, 
+  which handles rolling updates to update pod templates across all replicas.
+  Existing Pods: For the changes to take effect and for new pods with the updated image to be created, you might have to manually 
+  delete the old pods after updating the ReplicaSet. The ReplicaSet will then create new pods with the updated configuration
+
+2. How to scale no of replicas in a replicaset ? 
+   The kubectl scale command allows you to adjust the number of replicas in a ReplicaSet, which changes the number of pod instances     that should be running in your cluster. This is particularly useful for adjusting the capacity of your application in response to    changes in demand. Here is how you can use the command:
+
+  kubectl scale replicaset <replicaset-name> --replicas=<number-of-replicas>
+  <replicaset-name>: The name of the ReplicaSet you want to scale.
+  <number-of-replicas>: The new desired number of replicas.
+  Example
+  If you have a ReplicaSet named my-replicaset and you want to scale it to have 5 replicas, you would run:
+
+  kubectl scale replicaset my-replicaset --replicas=5
+  This command tells Kubernetes to adjust the number of pods managed by my-replicaset to 5. If there are fewer than 5 pods currently   running, new pods will be started to meet the desired count. If there are more than 5, the excess pods will be terminated.
+
+  Additional Options
+  Namespace: If your ReplicaSet is in a specific namespace, you can specify it using the --namespace or -n flag:
 
 
-kubectl edit replicaset <replicaset-name>
-This will open the ReplicaSet's definition in your default editor, allowing you to make any necessary changes, including updating the image. Once you save and close the editor, Kubernetes will apply the changes.
+  kubectl scale replicaset <replicaset-name> --replicas=<number-of-replicas> --namespace=<namespace>
+  Dry Run: To see the outcome of the scale operation without applying the changes, you can use the --dry-run=client option. This is     useful for testing:
 
-Note:
-Update Strategy: Be aware that directly updating a ReplicaSet's pod template with a new image does not automatically cause existing pods to be replaced with the new image. ReplicaSets are designed to ensure a specific number of pods are 
-running but do not actively replace pods on template changes. If you need this behavior, consider using a Deployment instead, which handles rolling updates to update pod templates across all replicas.
-Existing Pods: For the changes to take effect and for new pods with the updated image to be created, you might have to manually delete the old pods after updating the ReplicaSet. The ReplicaSet will then create new pods with the updated configuration
+  kubectl scale replicaset <replicaset-name> --replicas=<number-of-replicas> --dry-run=client
+  Scaling operations are immediately reflected in the Kubernetes cluster, and the control plane works to ensure that the desired         state is achieved by starting up or shutting down pods as necessary.
