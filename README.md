@@ -5,6 +5,7 @@ The default output format for all kubectl commands is the human-readable plain-t
 
 The -o flag allows us to output the details in several different formats.
 
+```bash
 kubectl [command] [TYPE] [NAME] -o <output_format>
 
 Here are some of the commonly used formats:
